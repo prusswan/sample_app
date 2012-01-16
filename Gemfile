@@ -7,6 +7,9 @@ gem 'rails', '3.1.1'
 
 gem 'sqlite3'
 
+# used for have_selector
+gem 'webrat'
+
 group :development do
   gem 'rspec-rails'
 end
