@@ -19,6 +19,12 @@ group :test do
   gem 'spork', '> 0.9.0.rc'
 end
 
+group :production do
+  # http://stackoverflow.com/questions/7296683/rails-3-1-pushing-to-heroku-errors-installing-postgres-adapter
+  # gems specifically for Heroku go here
+  gem "pg"
+end
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
