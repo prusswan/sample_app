@@ -125,6 +125,10 @@ describe User do
       @user.should respond_to(:encrypted_password)
     end
 
+    it "should set the encrypted password attribute" do
+      @user.encrypted_password.should_not be_blank
+    end
+
   end
 
 end
