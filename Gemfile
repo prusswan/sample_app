@@ -16,6 +16,7 @@ group :test do
   gem 'rspec-rails'
   gem 'spork', '> 0.9.0.rc'
   gem 'webrat' # used for have_selector
+  gem 'factory_girl_rails'
 end
 
 group :production do
