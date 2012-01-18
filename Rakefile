@@ -5,3 +5,7 @@
 require File.expand_path('../config/application', __FILE__)
 
 SampleApp::Application.load_tasks
+
+ENV['position_in_class']   = "before"
+ENV['position_in_fixture'] = "before"
+ENV['include_version']     = "false"
