@@ -59,11 +59,11 @@ nav ul {
 nav ul li {
   list-style-type: none;
   display: inline-block;
-  padding: 0.2 0em;
+  padding: 0.2em 0;
 }
 
 nav ul li a {
-  padding: 0 5 px;
+  padding: 0 5px;
   font-weight: bold;
 }
 
