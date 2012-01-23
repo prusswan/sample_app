@@ -16,12 +16,25 @@ end
 group :development do
   gem 'annotate', '~> 2.4.1.beta1'
   gem 'faker'
+  gem 'guard-rspec'
 end
 
 group :test do
   gem 'spork-rails'
   gem 'webrat' # used for have_selector
   gem 'factory_girl_rails'
+  gem 'capybara'
+  # gem 'turn'
+  # gem 'minitest'
+
+  # System-dependent gems for guard
+  # On windows
+  gem 'win32console' # for guard to use color
+  gem 'rb-fchange'
+  # gem 'rb-notifu' # system tray notification
+  gem 'ruby_gntp'   # Growl notification
+
+  gem 'guard-spork' # for guard to evoke spork
 end
 
 group :production do
