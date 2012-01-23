@@ -1,23 +1,25 @@
 source 'http://rubygems.org'
 
-gem 'rails', '>= 3.1.1'
+gem 'rails', '3.2.0'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
 gem 'gravatar_image_tag'
 gem 'will_paginate', '>= 3.0.pre4'
 
-group :development do
+group :development, :test do
+  gem 'sqlite3'
   gem 'rspec-rails'
+end
+
+group :development do
   gem 'annotate', '~> 2.4.1.beta1'
   gem 'faker'
 end
 
 group :test do
-  gem 'rspec-rails'
-  gem 'spork', '> 0.9.0.rc'
+  gem 'spork-rails'
   gem 'webrat' # used for have_selector
   gem 'factory_girl_rails'
 end
@@ -31,8 +33,8 @@ end
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.1.4'
-  gem 'coffee-rails', '~> 3.1.1'
+  gem 'sass-rails',   '~> 3.2.3'
+  gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
 end
 
