@@ -4,6 +4,7 @@ SampleApp::Application.routes.draw do
     member do
       get :following, :followers
     end
+    resources :microposts
   end
 
   resources :sessions,      :only => [:new, :create, :destroy]

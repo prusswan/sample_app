@@ -217,10 +217,15 @@ table.microposts tr td.micropost {
   padding-top: 10px;
 }
 
-table.microposts tr td.micropost span.timestamp {
+table.microposts tr td.micropost span.timestamp,
+span.timestamp.span-10, span.timestamp.span-7 {
   display: block;
   font-size: 85%;
   color: #666;
+}
+
+ol.microposts {
+  list-style-type: none;
 }
 
 div.user_info img {
