@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
 
+  before_filter :force_ssl, :only => [:new, :create]
+
   def new
     @title = "Sign in"
   end
@@ -21,5 +23,16 @@ class SessionsController < ApplicationController
     sign_out
     redirect_to root_path
   end
+
+  private
+
+    def force_ssl
+      if request.ssl? && !Rails.env.production?
+        flash.now[:info] = "Request is ssl"
+      else
+        # flash.now[:info] = "Request is not ssl"
+        # redirect_to :protocol => 'https'
+      end
+    end
 
 end

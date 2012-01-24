@@ -38,4 +38,8 @@ SampleApp::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   config.active_record.auto_explain_threshold_in_seconds = 0.5
+
+  # http://justinleitgeb.com/2011/09/easy-application-wide-ssl-configuration-in-rails-3-2/
+  # config.force_ssl = true  # inteferes with session-based authentication right now
+  config.ssl_options = { :exclude => proc { |env| env['HTTPS'] != 'on' } }
 end

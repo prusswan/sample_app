@@ -14,6 +14,13 @@ describe SessionsController do
       get :new
       response.should have_selector('title', :content => "Sign in")
     end
+
+    it "should redirect to https" do
+      get :new
+      pending "Until there's a way to serve HTTP and HTTPS requests in parallel"
+      response.should redirect_to(:protocol => 'https')
+    end
+
   end
 
   describe "POST 'create'" do
