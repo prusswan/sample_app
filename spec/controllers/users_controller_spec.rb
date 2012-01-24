@@ -64,7 +64,7 @@ describe UsersController do
         other_user = User.all.second
         get :index
         response.should_not have_selector('a', :href => user_path(other_user),
-                                           :content => "delete")
+                                               :content => "delete")
       end
 
     end
@@ -171,6 +171,19 @@ describe UsersController do
       response.should have_selector("input[name='user[password_confirmation]'][type='password']")
     end
 
+    describe "for signed-in users" do
+
+      before(:each) do
+        @user = test_sign_in(Factory(:user))
+      end
+
+      it "should deny access" do
+        get :new
+        response.should redirect_to(root_path)
+      end
+
+    end
+
   end
 
   describe  "Post 'create'" do
@@ -228,6 +241,19 @@ describe UsersController do
       it "should sign the user in" do
         post :create, :user => @attr
         controller.should be_signed_in
+      end
+
+    end
+
+    describe "for signed-in users" do
+
+      before(:each) do
+        @user = test_sign_in(Factory(:user))
+      end
+
+      it "should deny access" do
+        post :create
+        response.should redirect_to(root_path)
       end
 
     end
