@@ -63,4 +63,24 @@ describe "Users" do
 
   end
 
+  describe "follow/unfollow" do
+
+    before(:each) do
+      @user = Factory(:user)
+      @other_user = Factory(:user, :email => Factory.next(:email))
+      integration_sign_in(@user)
+    end
+
+    it "should be able to follow and unfollow a user" do
+      lambda do
+        visit user_path(@other_user.id)
+        response.should have_selector('input', :value => "Follow")
+        click_button "Follow"
+        response.should have_selector('input', :value => "Unfollow")
+        click_button "Unfollow"
+      end.should_not change(@user.following, :count)
+    end
+
+  end
+
 end
