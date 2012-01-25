@@ -1,0 +1,18 @@
+<td class="sidebar round">
+  <% if params[:action] == 'home' %>
+    <%= render 'shared/user_info' %>
+  <% else %>
+    <% @user ||= current_user %>
+    <strong>Name</strong> <%= @user.name %><br />
+    <strong>URL</strong> <%= link_to user_path(@user), @user %><br />
+    <strong>Microposts</strong> <%= @user.microposts.count %>
+  <% end %>
+
+  <%= render 'shared/stats' %>
+
+  <% if !@users.nil? && @users.any? %>
+    <% @users.each do |user| %>
+      <%= link_to gravatar_for(user, :size => 30), user %>
+    <% end %>
+  <% end %>
+</td>
