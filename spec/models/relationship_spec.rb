@@ -61,4 +61,24 @@ describe Relationship do
 
   end
 
+  describe "user associations" do
+
+    before(:each) do
+      @relationship = @follower.relationships.create!(@attr)
+    end
+
+    it "should destroy associated relationships when user is destroyed" do
+      lambda do
+        @follower.destroy
+      end.should change(Relationship, :count).by(-1)
+    end
+
+    it "should destroy reverse relationships when user is destroyed" do
+      lambda do
+        @follower.destroy
+      end.should change(@followed.followers, :count).by(-1)
+    end
+
+  end
+
 end
