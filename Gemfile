@@ -8,6 +8,8 @@ gem 'rails', '3.2.0'
 gem 'gravatar_image_tag'
 gem 'will_paginate', '>= 3.0.pre4'
 
+gem 'therubyracer', :platforms => :ruby # needed on linux for javascript support
+
 group :development, :test do
   gem 'sqlite3'
   gem 'rspec-rails'
@@ -29,8 +31,8 @@ group :test do
 
   # System-dependent gems for guard
   # On windows
-  gem 'win32console' # for guard to use color
-  gem 'rb-fchange'
+  gem 'win32console', :platforms => [:mswin, :mingw] # for guard to use color
+  gem 'rb-fchange', :platforms => [:mswin, :mingw]
   # gem 'rb-notifu' # system tray notification
   gem 'ruby_gntp'   # Growl notification
 
@@ -64,4 +66,3 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
-
