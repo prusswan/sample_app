@@ -28,6 +28,12 @@ group :test do
   gem 'capybara'
   # gem 'turn'
   # gem 'minitest'
+  
+  # Autotest gems
+  gem 'autotest'
+  gem 'autotest-rails-pure'
+  # gem 'autotest-fsevent'
+  gem 'autotest-growl'
 
   # System-dependent gems for guard
   # On windows
