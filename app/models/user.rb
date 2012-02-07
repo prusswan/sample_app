@@ -1,21 +1,23 @@
 # == Schema Information
-# Schema version: 20120121000541
+# Schema version: 20120207101928
 #
 # Table name: users
 #
 #  id                 :integer         not null, primary key
 #  name               :string(255)
 #  email              :string(255)
-#  created_at         :datetime
-#  updated_at         :datetime
+#  created_at         :datetime        not null
+#  updated_at         :datetime        not null
 #  encrypted_password :string(255)
 #  salt               :string(255)
 #  admin              :boolean         default(FALSE)
+#  password_digest    :string(255)
 #
 
 class User < ActiveRecord::Base
-  attr_accessor   :password
+  # attr_accessor   :password
   attr_accessible :name, :email, :password, :password_confirmation
+  has_secure_password
 
   has_many :microposts,    :dependent => :destroy
   has_many :relationships, :dependent => :destroy,
