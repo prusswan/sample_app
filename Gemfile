@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.0'
+gem 'rails', '~> 3.2.0'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
@@ -24,12 +24,12 @@ end
 
 group :test do
   gem 'spork-rails'
-  gem 'webrat' # used for have_selector
+  # gem 'webrat' # used for have_selector
   gem 'factory_girl_rails'
   gem 'capybara'
   # gem 'turn'
   # gem 'minitest'
-  
+
   # Autotest gems
   gem 'autotest'
   gem 'autotest-rails-pure'

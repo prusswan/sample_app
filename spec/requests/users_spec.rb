@@ -12,9 +12,9 @@ describe "Users" do
           fill_in "Email",        :with => ""
           fill_in "Password",     :with => ""
           fill_in "Confirmation", :with => ""
-          click_button
-          response.should render_template('users/new')
-          response.should have_selector('div#error_explanation')
+          click_button "Sign up"
+          # response.should render_template('users/new')
+          page.body.should have_selector('div#error_explanation')
         end.should_not change(User, :count)
       end
     end
@@ -27,10 +27,10 @@ describe "Users" do
           fill_in "Email",        :with => "user@example.com"
           fill_in "Password",     :with => "foobar"
           fill_in "Confirmation", :with => "foobar"
-          click_button
-          response.should have_selector('div.flash.success',
-                                        :content => "Welcome")
-          response.should render_template('users/show')
+          click_button "Sign up"
+          page.body.should have_selector('div.flash.success',
+                                        :text => "Welcome")
+          # response.should render_template('users/show')
         end.should change(User, :count).by(1)
       end
     end
@@ -44,10 +44,10 @@ describe "Users" do
         visit signin_path
         fill_in "Email",    :with => ""
         fill_in "Password", :with => ""
-        click_button
-        response.should have_selector('div.flash.error',
-                                      :content => "Invalid")
-        response.should render_template('sessions/new')
+        click_button "Sign in"
+        page.body.should have_selector('div.flash.error',
+                                      :text => "Invalid")
+        # response.should render_template('sessions/new')
       end
     end
 
