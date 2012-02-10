@@ -18,8 +18,8 @@ describe PagesController do
 
       it "should have the right title" do
         get 'home'
-        response.should have_selector("title",
-                                      :content => "#{@base_title} | Home")
+        response.body.should have_selector("title",
+                                           :text => "#{@base_title} | Home")
       end
 
       it "should have a non-blank body" do
@@ -37,10 +37,8 @@ describe PagesController do
 
       it "should have the right follower/following counts" do
         get :home
-        response.should have_selector('a', :href => following_user_path(@user),
-                                           :content => "0 following")
-        response.should have_selector('a', :href => followers_user_path(@user),
-                                           :content => "1 follower")
+        response.body.should have_link('0 following', :href => following_user_path(@user))
+        response.body.should have_link('1 follower', :href => followers_user_path(@user))
       end
 
       it "should not have delete links to microposts of other users" do
@@ -54,10 +52,10 @@ describe PagesController do
       it "should show the correct micropost count" do
         Factory(:micropost, :user => @user)
         get :home
-        response.should have_selector('span.microposts', :content => "1 micropost")
+        response.body.should have_selector('span.microposts', :text => "1 micropost")
         Factory(:micropost, :user => @user)
         get :home
-        response.should have_selector('span.microposts', :content => "2 microposts")
+        response.body.should have_selector('span.microposts', :text => "2 microposts")
       end
     end
 
@@ -70,8 +68,8 @@ describe PagesController do
     end
     it "should have the right title" do
       get 'contact'
-      response.should have_selector("title",
-                                    :content => "#{@base_title} | Contact")
+      response.body.should have_selector("title",
+                                         :text => "#{@base_title} | Contact")
     end
   end
 
@@ -82,8 +80,8 @@ describe PagesController do
     end
     it "should have the right title" do
       get 'about'
-      response.should have_selector("title",
-                                    :content => "#{@base_title} | About")
+      response.body.should have_selector("title",
+                                         :text => "#{@base_title} | About")
     end
   end
 
@@ -94,8 +92,8 @@ describe PagesController do
     end
     it "should have the right title" do
       get 'help'
-      response.should have_selector("title",
-                                    :content => "#{@base_title} | Help")
+      response.body.should have_selector("title",
+                                         :text => "#{@base_title} | Help")
     end
   end
 end
