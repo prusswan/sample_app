@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20120207101928
+# Schema version: 20120212091125
 #
 # Table name: users
 #
@@ -12,6 +12,7 @@
 #  salt               :string(255)
 #  admin              :boolean         default(FALSE)
 #  password_digest    :string(255)
+#  remember_token     :string(255)
 #
 
 require 'spec_helper'
@@ -312,6 +313,7 @@ describe User do
     it { should respond_to(:password_digest) }
     it { should respond_to(:password) }
     it { should respond_to(:password_confirmation) }
+    it { should respond_to(:remember_token) }
     it { should respond_to(:authenticate) }
 
     it { should be_valid }
@@ -386,6 +388,11 @@ describe User do
         it { should_not == user_for_invalid_password }
         specify { user_for_invalid_password.should be_false }
       end
+    end
+
+    describe "remember token" do
+      before { @user.save }
+      its(:remember_token) { should_not be_blank }
     end
 
   end

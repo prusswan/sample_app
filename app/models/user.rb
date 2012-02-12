@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20120207101928
+# Schema version: 20120212091125
 #
 # Table name: users
 #
@@ -12,6 +12,7 @@
 #  salt               :string(255)
 #  admin              :boolean         default(FALSE)
 #  password_digest    :string(255)
+#  remember_token     :string(255)
 #
 
 class User < ActiveRecord::Base
@@ -42,6 +43,7 @@ class User < ActiveRecord::Base
                        :length => { :within => 6..40 }
 
   before_save :encrypt_password
+  before_save :create_remember_token
 
   def has_password?(submitted_password)
     encrypted_password == encrypt(submitted_password)
@@ -92,6 +94,10 @@ class User < ActiveRecord::Base
 
     def secure_hash(string)
       Digest::SHA2.hexdigest(string)
+    end
+
+    def create_remember_token
+      self.remember_token = SecureRandom.urlsafe_base64
     end
 
 end
