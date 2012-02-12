@@ -55,9 +55,11 @@ describe "Users" do
       it "should sign a user in and out" do
         user = Factory(:user)
         integration_sign_in(user)
-        controller.should be_signed_in
+        # controller.should be_signed_in
+        page.body.should have_link('Sign out', href: signout_path)
         click_link "Sign out"
-        controller.should_not be_signed_in
+        # controller.should_not be_signed_in
+        page.body.should have_link('Sign in', href: signin_path)
       end
     end
 
@@ -74,9 +76,9 @@ describe "Users" do
     it "should be able to follow and unfollow a user" do
       lambda do
         visit user_path(@other_user.id)
-        response.should have_selector('input', :value => "Follow")
+        page.body.should have_selector("input[value='Follow']")
         click_button "Follow"
-        response.should have_selector('input', :value => "Unfollow")
+        page.body.should have_selector("input[value='Unfollow']")
         click_button "Unfollow"
       end.should_not change(@user.following, :count)
     end
