@@ -54,6 +54,7 @@ describe "Users" do
     describe "success" do
       it "should sign a user in and out" do
         user = Factory(:user)
+        visit signin_path
         integration_sign_in(user)
         # controller.should be_signed_in
         page.body.should have_link('Sign out', href: signout_path)
@@ -70,6 +71,7 @@ describe "Users" do
     before(:each) do
       @user = Factory(:user)
       @other_user = Factory(:user, :email => Factory.next(:email))
+      visit signin_path
       integration_sign_in(@user)
     end
 
