@@ -7,9 +7,10 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.authenticate(params[:session][:email],
-                             params[:session][:password])
-    if user.nil?
+    # user = User.authenticate_old(params[:session][:email],
+    #                              params[:session][:password])
+    user = User.find_by_email(params[:session][:email])
+    if user.nil? || !user.authenticate(params[:session][:password])
       flash.now[:error] = "Invalid email/password confirmation."
       @title = "Sign in"
       render 'new'
