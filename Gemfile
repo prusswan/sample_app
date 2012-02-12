@@ -29,6 +29,8 @@ group :test do
   gem 'capybara'
   # gem 'turn'
   # gem 'minitest'
+  gem 'cucumber-rails'
+  gem 'database_cleaner'
 
   # Autotest gems
   gem 'autotest'
