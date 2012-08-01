@@ -8,13 +8,13 @@ FactoryGirl.define do
       admin true
     end
   end
-end
 
-Factory.sequence :email do |n|
-  "person-#{n}@example.com"
-end
+  sequence :email do |n|
+    "person-#{n}@example.com"
+  end
 
-Factory.define :micropost do |micropost|
-  micropost.content "Foo bar"
-  micropost.association :user
+  factory :micropost do
+    content "Foo bar"
+    association :user
+  end
 end

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "FriendlyForwardings" do
 
   it "should forward to the requested page after signin" do
-    user = Factory(:user)
+    user = FactoryGirl.create(:user)
     visit edit_user_path(user)
     visit signin_path
     integration_sign_in(user)

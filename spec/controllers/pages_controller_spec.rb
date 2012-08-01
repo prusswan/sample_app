@@ -30,8 +30,8 @@ describe PagesController do
 
     describe "when signed in" do
       before(:each) do
-        @user = test_sign_in(Factory(:user))
-        @other_user = Factory(:user, :email => Factory.next(:email))
+        @user = test_sign_in(FactoryGirl.create(:user))
+        @other_user = FactoryGirl.create(:user, :email => FactoryGirl.generate(:email))
         @other_user.follow!(@user)
       end
 
@@ -42,7 +42,7 @@ describe PagesController do
       end
 
       it "should not have delete links to microposts of other users" do
-        Factory(:micropost, :user => @other_user)
+        FactoryGirl.create(:micropost, :user => @other_user)
         @user.follow!(@other_user)
         get :home
         response.should_not have_selector('a', :href => user_path(@other_user),
@@ -50,10 +50,10 @@ describe PagesController do
       end
 
       it "should show the correct micropost count" do
-        Factory(:micropost, :user => @user)
+        FactoryGirl.create(:micropost, :user => @user)
         get :home
         response.body.should have_selector('span.microposts', :text => "1 micropost")
-        Factory(:micropost, :user => @user)
+        FactoryGirl.create(:micropost, :user => @user)
         get :home
         response.body.should have_selector('span.microposts', :text => "2 microposts")
       end

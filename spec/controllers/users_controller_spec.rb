@@ -16,12 +16,12 @@ describe UsersController do
     describe "for signed-in users" do
 
       before(:each) do
-        @user = test_sign_in(Factory(:user))
-        Factory(:user, :email => "another@example.com")
-        Factory(:user, :email => "another@example.net")
+        @user = test_sign_in(FactoryGirl.create(:user))
+        FactoryGirl.create(:user, :email => "another@example.com")
+        FactoryGirl.create(:user, :email => "another@example.net")
 
         30.times do
-          Factory(:user, :email => Factory.next(:email))
+          FactoryGirl.create(:user, :email => FactoryGirl.generate(:email))
         end
       end
 
@@ -74,7 +74,7 @@ describe UsersController do
   describe "Get 'show'" do
 
     before(:each) do
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
     end
 
     it "should be successful" do
@@ -109,21 +109,21 @@ describe UsersController do
     end
 
     it "should show the user's microposts" do
-      mp1 = Factory(:micropost, :user => @user, :content => "Foo bar")
-      mp2 = Factory(:micropost, :user => @user, :content => "Baz quux")
+      mp1 = FactoryGirl.create(:micropost, :user => @user, :content => "Foo bar")
+      mp2 = FactoryGirl.create(:micropost, :user => @user, :content => "Baz quux")
       get :show, :id => @user
       response.body.should have_selector('span.content', :text => mp1.content)
       response.body.should have_selector('span.content', :text => mp2.content)
     end
 
     it "should paginate microposts" do
-      35.times { Factory(:micropost, :user => @user, :content => "foo") }
+      35.times { FactoryGirl.create(:micropost, :user => @user, :content => "foo") }
       get :show, :id => @user
       response.body.should have_selector('div.pagination')
     end
 
     it "should display the micropost count" do
-      10.times { Factory(:micropost, :user => @user, :content => "foo") }
+      10.times { FactoryGirl.create(:micropost, :user => @user, :content => "foo") }
       get :show, :id => @user
       response.body.should have_selector('td.sidebar',
                                          :text => @user.microposts.count.to_s)
@@ -131,7 +131,7 @@ describe UsersController do
 
     describe "when signed in as another user" do
       it "should be successful" do
-        test_sign_in(Factory(:user, :email => Factory.next(:email)))
+        test_sign_in(FactoryGirl.create(:user, :email => FactoryGirl.generate(:email)))
         get :show, :id => @user
         response.should be_success
       end
@@ -174,7 +174,7 @@ describe UsersController do
     describe "for signed-in users" do
 
       before(:each) do
-        @user = test_sign_in(Factory(:user))
+        @user = test_sign_in(FactoryGirl.create(:user))
       end
 
       it "should deny access" do
@@ -248,7 +248,7 @@ describe UsersController do
     describe "for signed-in users" do
 
       before(:each) do
-        @user = test_sign_in(Factory(:user))
+        @user = test_sign_in(FactoryGirl.create(:user))
       end
 
       it "should deny access" do
@@ -263,7 +263,7 @@ describe UsersController do
   describe "GET 'edit'" do
 
     before(:each) do
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
       test_sign_in(@user)
     end
 
@@ -289,7 +289,7 @@ describe UsersController do
 
 
     before(:each) do
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
       test_sign_in(@user)
     end
 
@@ -340,7 +340,7 @@ describe UsersController do
   describe "authentication of edit/update actions" do
 
     before(:each) do
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
     end
 
     describe "for non-signed-in users" do
@@ -360,7 +360,7 @@ describe UsersController do
     describe "for signed-in users" do
 
       before(:each) do
-        wrong_user = Factory(:user, :email => "user@example.net")
+        wrong_user = FactoryGirl.create(:user, :email => "user@example.net")
         test_sign_in(wrong_user)
       end
 
@@ -381,7 +381,7 @@ describe UsersController do
   describe "DELETE 'destroy'" do
 
     before(:each) do
-      @user = Factory(:user)
+      @user = FactoryGirl.create(:user)
     end
 
     describe "as a non-signed-in user" do
@@ -402,7 +402,7 @@ describe UsersController do
     describe "as an admin user" do
 
       before(:each) do
-        @admin = Factory(:user, :email => "admin@example.com", :admin => true)
+        @admin = FactoryGirl.create(:user, :email => "admin@example.com", :admin => true)
         test_sign_in(@admin)
       end
 
@@ -447,8 +447,8 @@ describe UsersController do
     describe "when signed in" do
 
       before(:each) do
-        @user = test_sign_in(Factory(:user))
-        @other_user = Factory(:user, :email => Factory.next(:email))
+        @user = test_sign_in(FactoryGirl.create(:user))
+        @other_user = FactoryGirl.create(:user, :email => FactoryGirl.generate(:email))
         @user.follow!(@other_user)
       end
 

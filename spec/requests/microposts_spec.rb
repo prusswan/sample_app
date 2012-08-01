@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Microposts" do
 
   before(:each) do
-    user = Factory(:user)
+    user = FactoryGirl.create(:user)
     visit signin_path
     integration_sign_in(user)
   end

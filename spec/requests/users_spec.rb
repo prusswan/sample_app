@@ -53,7 +53,7 @@ describe "Users" do
 
     describe "success" do
       it "should sign a user in and out" do
-        user = Factory(:user)
+        user = FactoryGirl.create(:user)
         visit signin_path
         integration_sign_in(user)
         # controller.should be_signed_in
@@ -69,8 +69,8 @@ describe "Users" do
   describe "follow/unfollow" do
 
     before(:each) do
-      @user = Factory(:user)
-      @other_user = Factory(:user, :email => Factory.next(:email))
+      @user = FactoryGirl.create(:user)
+      @other_user = FactoryGirl.create(:user, :email => FactoryGirl.generate(:email))
       visit signin_path
       integration_sign_in(@user)
     end
