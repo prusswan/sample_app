@@ -1,21 +1,24 @@
 # == Schema Information
-# Schema version: 20120121000541
+# Schema version: 20120212091125
 #
 # Table name: users
 #
 #  id                 :integer         not null, primary key
 #  name               :string(255)
 #  email              :string(255)
-#  created_at         :datetime
-#  updated_at         :datetime
+#  created_at         :datetime        not null
+#  updated_at         :datetime        not null
 #  encrypted_password :string(255)
 #  salt               :string(255)
 #  admin              :boolean         default(FALSE)
+#  password_digest    :string(255)
+#  remember_token     :string(255)
 #
 
 class User < ActiveRecord::Base
-  attr_accessor   :password
+  # attr_accessor   :password
   attr_accessible :name, :email, :password, :password_confirmation
+  has_secure_password
 
   has_many :microposts,    :dependent => :destroy
   has_many :relationships, :dependent => :destroy,
@@ -40,6 +43,7 @@ class User < ActiveRecord::Base
                        :length => { :within => 6..40 }
 
   before_save :encrypt_password
+  before_save :create_remember_token
 
   def has_password?(submitted_password)
     encrypted_password == encrypt(submitted_password)
@@ -62,7 +66,7 @@ class User < ActiveRecord::Base
   end
 
   class << self
-    def authenticate(email, submitted_password)
+    def authenticate_old(email, submitted_password)
       user = find_by_email(email)
       (user && user.has_password?(submitted_password)) ? user : nil
     end
@@ -90,6 +94,10 @@ class User < ActiveRecord::Base
 
     def secure_hash(string)
       Digest::SHA2.hexdigest(string)
+    end
+
+    def create_remember_token
+      self.remember_token = SecureRandom.urlsafe_base64
     end
 
 end

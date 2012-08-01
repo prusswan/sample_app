@@ -32,32 +32,32 @@ describe UsersController do
 
       it "should have the right title" do
         get :index
-        response.should have_selector('title', :content => "All users")
+        response.body.should have_selector('title', :text => "All users")
       end
 
       it "should have an element for each user" do
         get :index
         User.paginate(:page => 1).each do |user|
-          response.should have_selector('li', :content => user.name)
+          response.body.should have_selector('li', :text => user.name)
         end
       end
 
       it "should paginate users" do
         get :index
-        response.should have_selector('div.pagination')
-        response.should have_selector('span.disabled', :content => "Previous")
-        response.should have_selector('a', :href => "/users?page=2",
-                                           :content => "2")
-        response.should have_selector('a', :href => "/users?page=2",
-                                           :content => "Next")
+        response.body.should have_selector('div.pagination')
+        response.body.should have_selector('span.disabled', :text => "Previous")
+        response.body.should have_selector('a', :href => "/users?page=2",
+                                                :text => "2")
+        response.body.should have_selector('a', :href => "/users?page=2",
+                                                :text => "Next")
       end
 
       it "should have delete links for admins" do
         @user.toggle!(:admin)
         other_user = User.all.second
         get :index
-        response.should have_selector('a', :href => user_path(other_user),
-                                           :content => "delete")
+        response.body.should have_selector('a', :href => user_path(other_user),
+                                                :text => "delete")
       end
 
       it "should not have delete links for non-admins" do
@@ -89,44 +89,44 @@ describe UsersController do
 
     it "should have the right title" do
       get :show, :id => @user
-      response.should have_selector('title', :content => @user.name)
+      response.body.should have_selector('title', :text => @user.name)
     end
 
     it "should have the user's name" do
       get :show, :id => @user
-      response.should have_selector('h1', :content => @user.name)
+      response.body.should have_selector('h1', :text => @user.name)
     end
 
     it "should have a profile image" do
       get :show, :id => @user
-      response.should have_selector('h1>img', :class => "gravatar")
+      response.body.should have_selector('h1>img.gravatar')
     end
 
     it "should have the right URL" do
       get :show, :id => @user
-      response.should have_selector('td>a', :content => user_path(@user),
-                                            :href    => user_path(@user))
+      response.body.should have_selector('td>a', :text => user_path(@user),
+                                                 :href => user_path(@user))
     end
 
     it "should show the user's microposts" do
       mp1 = Factory(:micropost, :user => @user, :content => "Foo bar")
       mp2 = Factory(:micropost, :user => @user, :content => "Baz quux")
       get :show, :id => @user
-      response.should have_selector('span.content', :content => mp1.content)
-      response.should have_selector('span.content', :content => mp2.content)
+      response.body.should have_selector('span.content', :text => mp1.content)
+      response.body.should have_selector('span.content', :text => mp2.content)
     end
 
     it "should paginate microposts" do
       35.times { Factory(:micropost, :user => @user, :content => "foo") }
       get :show, :id => @user
-      response.should have_selector('div.pagination')
+      response.body.should have_selector('div.pagination')
     end
 
     it "should display the micropost count" do
       10.times { Factory(:micropost, :user => @user, :content => "foo") }
       get :show, :id => @user
-      response.should have_selector('td.sidebar',
-                                    :content => @user.microposts.count.to_s)
+      response.body.should have_selector('td.sidebar',
+                                         :text => @user.microposts.count.to_s)
     end
 
     describe "when signed in as another user" do
@@ -148,27 +148,27 @@ describe UsersController do
 
     it "should have the right title" do
       get :new
-      response.should have_selector('title', :content => "Sign up")
+      response.body.should have_selector('title', :text => "Sign up")
     end
 
     it "should have a name field" do
       get :new
-      response.should have_selector("input[name='user[name]'][type='text']")
+      response.body.should have_selector("input[name='user[name]'][type='text']")
     end
 
     it "should have an email field" do
       get :new
-      response.should have_selector("input[name='user[email]'][type='text']")
+      response.body.should have_selector("input[name='user[email]'][type='text']")
     end
 
     it "should have a password field" do
       get :new
-      response.should have_selector("input[name='user[password]'][type='password']")
+      response.body.should have_selector("input[name='user[password]'][type='password']")
     end
 
     it "should have a password confirmation field" do
       get :new
-      response.should have_selector("input[name='user[password_confirmation]'][type='password']")
+      response.body.should have_selector("input[name='user[password_confirmation]'][type='password']")
     end
 
     describe "for signed-in users" do
@@ -198,7 +198,7 @@ describe UsersController do
 
       it "should have the right title" do
         post :create, :user => @attr
-        response.should have_selector('title', :content => "Sign up")
+        response.body.should have_selector('title', :text => "Sign up")
       end
 
       it "should render the 'new' page" do
@@ -274,13 +274,13 @@ describe UsersController do
 
     it "should have the right title" do
       get :edit, :id => @user
-      response.should have_selector('title', :content => "Edit user")
+      response.body.should have_selector('title', :text => "Edit user")
     end
 
     it "should have a link to change the Gravatar" do
       get :edit, :id => @user
-      response.should have_selector('a', :href => 'http://gravatar.com/emails',
-                                         :content => "change")
+      response.body.should have_selector('a', :href => 'http://gravatar.com/emails',
+                                              :text => "change")
     end
 
   end
@@ -307,7 +307,7 @@ describe UsersController do
 
       it "should have the right title" do
         put :update, :id => @user, :user => @attr
-        response.should have_selector('title', :content => "Edit user")
+        response.body.should have_selector('title', :text => "Edit user")
       end
 
     end
@@ -454,14 +454,14 @@ describe UsersController do
 
       it "should show user following" do
         get :following, :id => @user
-        response.should have_selector('a', :href => user_path(@other_user),
-                                           :content => @other_user.name)
+        response.body.should have_selector('a', :href => user_path(@other_user),
+                                                :text => @other_user.name)
       end
 
       it "should show user followers" do
         get :followers, :id => @other_user
-        response.should have_selector('a', :href => user_path(@user),
-                                           :content => @user.name)
+        response.body.should have_selector('a', :href => user_path(@user),
+                                                :text => @user.name)
       end
     end
   end

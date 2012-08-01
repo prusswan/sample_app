@@ -4,53 +4,53 @@ describe "LayoutLinks" do
 
   it "should have a Home page at '/'" do
     get '/'
-    response.should have_selector('title', :content => "Home")
+    response.body.should have_selector('title', :text => "Home")
   end
 
   it "should have a Contact page at '/contact'" do
     get '/contact'
-    response.should have_selector('title', :content => "Contact")
+    response.body.should have_selector('title', :text => "Contact")
   end
 
   it "should have an About page at '/about'" do
     get '/about'
-    response.should have_selector('title', :content => "About")
+    response.body.should have_selector('title', :text => "About")
   end
 
   it "should have a Help page at '/help'" do
     get '/help'
-    response.should have_selector('title', :content => "Help")
+    response.body.should have_selector('title', :text => "Help")
   end
 
   it "should have a signup page at '/signup'" do
     get '/signup'
-    response.should have_selector('title', :content => "Sign up")
+    response.body.should have_selector('title', :text => "Sign up")
   end
 
   it "should have a signin page at '/signin'" do
     get '/signin'
-    response.should have_selector('title', :content => "Sign in")
+    response.body.should have_selector('title', :text => "Sign in")
   end
 
   it "should have the right links on the layout" do
     visit root_path
-    response.should have_selector('title', :content => "Home")
+    page.body.should have_selector('title', :text => "Home")
     click_link "About"
-    response.should have_selector('title', :content => "About")
+    page.body.should have_selector('title', :text => "About")
     click_link "Contact"
-    response.should have_selector('title', :content => "Contact")
+    page.body.should have_selector('title', :text => "Contact")
     click_link "Home"
-    response.should have_selector('title', :content => "Home")
+    page.body.should have_selector('title', :text => "Home")
     click_link "Sign up now!"
-    response.should have_selector('title', :content => "Sign up")
-    response.should have_selector('a[href="/"]>img')
+    page.body.should have_selector('title', :text => "Sign up")
+    page.body.should have_selector('a[href="/"]>img')
   end
 
   describe "when not signed in" do
     it "should have a signin link" do
       visit root_path
-      response.should have_selector("a", :href => signin_path,
-                                         :content => "Sign in")
+      page.body.should have_selector("a", :href => signin_path,
+                                          :text => "Sign in")
     end
   end
 
@@ -58,31 +58,32 @@ describe "LayoutLinks" do
 
     before(:each) do
       @user = Factory(:user)
+      visit signin_path
       integration_sign_in(@user)
     end
 
     it "should have a signout link" do
       visit root_path
-      response.should have_selector("a", :href => signout_path,
-                                         :content => "Sign out")
+      page.body.should have_selector("a", :href => signout_path,
+                                          :text => "Sign out")
     end
 
     it "should have a profile link" do
       visit root_path
-      response.should have_selector("a", :href => user_path(@user),
-                                         :content => "Profile")
+      page.body.should have_selector("a", :href => user_path(@user),
+                                          :text => "Profile")
     end
 
     it "should have a settings link" do
       visit root_path
-      response.should have_selector("a", :href => edit_user_path(@user),
-                                         :content => "Settings")
+      page.body.should have_selector("a", :href => edit_user_path(@user),
+                                          :text => "Settings")
     end
 
     it "should have a users link" do
       visit root_path
-      response.should have_selector("a", :href => users_path,
-                                         :content => "Users")
+      page.body.should have_selector("a", :href => users_path,
+                                          :text => "Users")
     end
 
   end
