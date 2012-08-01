@@ -73,7 +73,7 @@ describe RelationshipsController do
       it "decrement the Relationship count" do
         expect do
           xhr :post, :create, relationship: { followed_id: other_user.id }
-        end.should change(Relationship, :count).by(1)
+        end.to change(Relationship, :count).by(1)
       end
     end
 
@@ -85,7 +85,7 @@ describe RelationshipsController do
       it "should destroy a relationship using Ajax" do
         expect do
           xhr :delete, :destroy, id: relationship.id
-        end.should change(Relationship, :count).by(-1)
+        end.to change(Relationship, :count).by(-1)
       end
     end
 
