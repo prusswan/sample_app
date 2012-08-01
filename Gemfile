@@ -29,7 +29,7 @@ group :test do
   gem 'capybara'
   # gem 'turn'
   # gem 'minitest'
-  gem 'cucumber-rails'
+  gem 'cucumber-rails', require: false
   gem 'database_cleaner'
 
   # Autotest gems
